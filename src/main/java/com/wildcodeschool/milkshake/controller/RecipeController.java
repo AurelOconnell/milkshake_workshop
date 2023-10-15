@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,7 +26,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes")
-    public List<Recipe> index() {
+    public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
@@ -40,7 +41,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping(path = "/add")
+    @GetMapping("/recipes")
     public String addNewRecipe(@RequestBody Recipe recipe) {
         recipeRepository.save(recipe);
         return "saved";
@@ -60,10 +61,10 @@ public class RecipeController {
         }
     }
 
-    @GetMapping("/recipe/delete")
+    @DeleteMapping("/recipes/{id}")
     public String deleteRecipe(@RequestParam Long id) {
         recipeRepository.deleteById(id);
-        return "redirect:/recipe";
+        return "deleted";
     }
 
 }
